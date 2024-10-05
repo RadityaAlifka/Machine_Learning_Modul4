@@ -64,15 +64,12 @@ st.sidebar.markdown("<h3 class='header-text'>Upload File dan Input Nilai</h3>", 
 uploaded_file = st.sidebar.file_uploader("Upload file dataset regresi_IPK.csv", type=["csv"])
 
 if uploaded_file is not None:
-    input_data = pd.read_csv(uploaded_file)
-    
-    # Drop kolom yang tidak diperlukan
-    input_data = input_data.drop(columns=['name', 'IPK'])
 
+    input_data = pd.read_csv(uploaded_file)
     st.write("<h3 style='text-align: center; color: #007a36;'>Data yang diupload:</h3>", unsafe_allow_html=True)
     st.dataframe(input_data)
 
-   
+
     model_path = r'SVR_IPK_model.pkl'
 
     if os.path.exists(model_path):
@@ -83,7 +80,7 @@ if uploaded_file is not None:
         scaler = loaded_model[1]
         SVR_model = loaded_model[2]
 
-        # Masukkan Nilai
+        
         st.sidebar.subheader("Masukkan Nilai")
         mtk1 = st.sidebar.number_input("Nilai Matematika Semester 1.1", 60.0, 100.0)
         mtk2 = st.sidebar.number_input("Nilai Matematika Semester 1.2", 60.0, 100.0)
@@ -98,7 +95,7 @@ if uploaded_file is not None:
         ind3 = st.sidebar.number_input("Nilai Bahasa Indonesia Semester 2.1", 60.0, 100.0)
         ind4 = st.sidebar.number_input("Nilai Bahasa Indonesia Semester 2.2", 60.0, 100.0)
 
-        # Masukkan Nilai KKM
+
         st.sidebar.subheader("Masukkan Nilai KKM")
         kkm_mtk1 = st.sidebar.number_input("KKM Nilai Matematika Semester 1.1", 0.0, 100.0)
         kkm_mtk2 = st.sidebar.number_input("KKM Nilai Matematika Semester 1.2", 0.0, 100.0)
@@ -113,18 +110,16 @@ if uploaded_file is not None:
         kkm_ind3 = st.sidebar.number_input("KKM Nilai Bahasa Indonesia Semester 2.1", 0.0, 100.0)
         kkm_ind4 = st.sidebar.number_input("KKM Nilai Bahasa Indonesia Semester 2.2", 0.0, 100.0)
 
-        # Masukkan data input
         input_data = [[mtk1, mtk2, mtk3, mtk4, ing1, ing2, ing3, ing4, ind1, ind2, ind3, ind4,
                         kkm_mtk1, kkm_mtk2, kkm_mtk3, kkm_mtk4, kkm_ing1, kkm_ing2, kkm_ing3, kkm_ing4,
                         kkm_ind1, kkm_ind2, kkm_ind3, kkm_ind4]]
         
-        # Transformasi input
         input_data_scaled = scaler.transform(input_data)
         input_data_selected = feature_selector.transform(input_data_scaled)
 
-        # Prediksi IPK
         if st.sidebar.button("Prediksi!"):
             SVR_model_predict = SVR_model.predict(input_data_selected)
             st.markdown(f"<h3 style='text-align: center; color: #4CAF50;'>Prediksi IPK adalah: {SVR_model_predict[0]:.2f}</h3>", unsafe_allow_html=True)
     else:
         st.error("Model tidak ditemukan, silakan cek file model di direktori.")
+
