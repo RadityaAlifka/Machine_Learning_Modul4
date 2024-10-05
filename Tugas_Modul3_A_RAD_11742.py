@@ -69,7 +69,8 @@ if uploaded_file is not None:
     st.write("<h3 style='text-align: center; color: #007a36;'>Data yang diupload:</h3>", unsafe_allow_html=True)
     st.dataframe(input_data)
 
-    model_path = os.path.join(model_directory, "SVR_IPK_model.pkl")
+    
+    model_path = r'SVR_IPK_model.pkl'
 
     if os.path.exists(model_path):
         with open(model_path, 'rb') as f:
@@ -121,4 +122,3 @@ if uploaded_file is not None:
             st.markdown(f"<h3 style='text-align: center; color: #4CAF50;'>Prediksi IPK adalah: {SVR_model_predict[0]:.2f}</h3>", unsafe_allow_html=True)
     else:
         st.error("Model tidak ditemukan, silakan cek file model di direktori.")
-
