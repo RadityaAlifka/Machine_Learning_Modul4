@@ -57,11 +57,11 @@ st.markdown("""
     </div>
 """, unsafe_allow_html=True)
 
-st.markdown("<h1 style='text-align: center; color: #4CAF50;'>Prediksi IPK- 11742</h1>", unsafe_allow_html=True)
+st.markdown("<h1 style='text-align: center; color: #4CAF50;'>Prediksi IPK- 11815</h1>", unsafe_allow_html=True)
 st.markdown("""<p style='text-align: center; color: #0073e6;'>Aplikasi ini berguna untuk memprediksi nilai IPK berdasarkan nilai Matematika, Bahasa Inggris, dan Bahasa Indonesia</p>""", unsafe_allow_html=True)
 
 st.sidebar.markdown("<h3 class='header-text'>Upload File dan Input Nilai</h3>", unsafe_allow_html=True)
-uploaded_file = st.sidebar.file_uploader("Upload file dataset regresi_IPK.csv", type=["csv"])
+uploaded_file = st.sidebar.file_uploader("Upload file dataset_regresi_IPK.csv", type=["csv"])
 
 if uploaded_file is not None:
 
@@ -70,14 +70,14 @@ if uploaded_file is not None:
     st.dataframe(input_data)
 
 
-    model_path = r'SVR_IPK_model.pkl'
+    model_path =  r'SVR_IPK_model.pkl'
 
     if os.path.exists(model_path):
         with open(model_path, 'rb') as f:
             loaded_model = pickle.load(f)
             
-        feature_selector = loaded_model[0]
-        scaler = loaded_model[1]
+        scaler = loaded_model[0]
+        feature_selector = loaded_model[1]
         SVR_model = loaded_model[2]
 
         
@@ -122,4 +122,3 @@ if uploaded_file is not None:
             st.markdown(f"<h3 style='text-align: center; color: #4CAF50;'>Prediksi IPK adalah: {SVR_model_predict[0]:.2f}</h3>", unsafe_allow_html=True)
     else:
         st.error("Model tidak ditemukan, silakan cek file model di direktori.")
-
